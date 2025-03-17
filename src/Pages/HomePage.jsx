@@ -1,5 +1,6 @@
 import Commantaire from "../Home/Commantaire"
 import Home from "../Home/Home"
+import Login from "../Home/Login"
 import Navbar from "../Home/Navbar"
 import Service from "../Home/Service"
 
@@ -12,6 +13,7 @@ function App() {
      <Home />
      <Service />  
      <Commantaire />
+     <Login />
     </>
   )
 }

@@ -32,7 +32,7 @@ export default function Commantaire() {
     ]
 
     return (
-        <div className='w-full min-h-screen'>
+        <div className='w-full min-h-[32em]'>
             <h1 className='text-3xl uppercase text-center font-bold mb-12'>quele commantaire des utilisateurs sur notre plateform</h1>
             <div className='flex justify-center items-center gap-10 '>
 
