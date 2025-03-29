@@ -7,6 +7,7 @@ import PageNotFound from './Pages/PageNotFound.jsx';
 import PageHotels from './Pages/PageHotels.jsx'; // Assurez-vous d'importer AllHotels
 import Navbar from './Hotels/Navbar.jsx';
 import DashbordAdmin from './Pages/DashbordAdmin.jsx';
+import Register from './Pages/Register.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -19,12 +20,12 @@ createRoot(document.getElementById('root')).render(
           <Route index element={<Navbar />} />
         </Route>
 
-       <Route path='/DashbordAdmin' element={<DashbordAdmin /> }>
+        <Route path='/DashbordAdmin' element={<DashbordAdmin />}>
 
-       </Route>
+        </Route>
 
+        <Route path='/register' element={<Register />} />
 
-       
 
         <Route path='*' element={<PageNotFound />} />
 

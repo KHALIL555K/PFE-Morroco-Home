@@ -11,11 +11,14 @@ export default {
         'brandPrimary': '#4CAF4F',
         'neutralGray': '#717171',
         'gray900': '#18191F'
+      },
+      fontFamily: {
+        Eagle: ['Eagle', 'sans-serif']
       }
     },
   },
-  darkMode:'class',
+  darkMode: 'class',
   plugins: [],
- 
+
 }
 
