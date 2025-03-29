@@ -14,6 +14,7 @@ export default function App() {
                     <Route index element={<Navbar />} />
                 </Route>
                 <Route path='/Dashbord/Admin' element={<DashbordAdmin />}>
+                    
                 </Route>
                 <Route path='/register' element={<Register />} />
                 <Route path='*' element={<PageNotFound />} />
