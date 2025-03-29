@@ -2,7 +2,7 @@ import React from 'react'
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 import Title from './Title'
 import { Tooltip } from 'flowbite-react'
-import { monthData } from '../constants/index'
+import { monthData } from '../../constants/index'
 
 export default function CustomBarChart() {
     return (

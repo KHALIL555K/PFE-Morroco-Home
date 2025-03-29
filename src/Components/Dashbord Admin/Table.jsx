@@ -1,6 +1,6 @@
 import React from 'react'
 import Title from './Title'
-import { tableData } from '../constants/index'
+import { tableData } from '../../constants/index'
 
 export default function Table() {
     return (

@@ -1,5 +1,5 @@
 import React from 'react'
-import chambreTest from '../assets/chambreTest.jpg'
+import chambreTest from '../../assets/chambreTest.jpg'
 import { IoIosAdd } from 'react-icons/io'
 
 export default function Hotels() {

@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from '../Hotels/Navbar'
-import Hotels from '../Hotels/Hotels'
+import Navbar from '../Components/Hotels/Navbar'
+import Hotels from '../Components/Hotels/Hotels'
 
 export default function PageHotels() {
     return (

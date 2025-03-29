@@ -1,5 +1,5 @@
 import React from 'react'
-import { cardItems } from '../constants/index'
+import { cardItems } from '../../constants/index'
 import CardItems from './CardItems'
 
 export default function Cards() {

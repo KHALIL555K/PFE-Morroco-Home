@@ -1,33 +1,75 @@
 import React, { useRef } from 'react'
-import room2 from '../assets/room2.jpg'
+import room2 from '../../assets/room2.jpg'
 import { Link, useNavigate } from 'react-router-dom'
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../firebase/firebaseConfig'
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, fireDB } from "../../firebase/firebaseConfig";
 
 export default function Login() {
 
     const emailRef = useRef()
     const passwordRef = useRef()
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const logIn = async (e) => {
         e.preventDefault();
+        // const navigate = useNavigate();
+
         try {
-            const result = await signInWithEmailAndPassword(
+            // 1. Authentification avec Firebase Auth
+            const userCredential = await signInWithEmailAndPassword(
                 auth,
                 emailRef.current.value,
                 passwordRef.current.value
             );
-            localStorage.setItem('user', JSON.stringify(result));
-            navigate('/Hotels');
-        } catch (e) {
-            console.error('Erreur :', e.message);
+            const user = userCredential.user;
+
+            // 2. Vérification de l'utilisateur authentifié
+            if (!user || !user.uid) {
+                throw new Error("Échec de l'authentification");
+            }
+
+            // 3. Récupération des données utilisateur depuis Firestore
+            const userDocRef = doc(fireDB, "users", user.uid);
+            const userDoc = await getDoc(userDocRef);
+
+            if (!userDoc.exists()) {
+                console.error("Profil utilisateur introuvable dans la base de données");
+                alert("Profil utilisateur introuvable. Veuillez contacter l'administration.");
+                return;
+            }
+
+            const userData = userDoc.data();
+            const userType = userData.type; // 'admin' ou 'client'
+
+            // 4. Stockage et redirection en fonction du type d'utilisateur
+            const userInfo = { ...user, ...userData };
+            if (userType === 'admin') {
+                localStorage.setItem('admin', JSON.stringify(userInfo));
+                navigate('/Dashbord/Admin');
+            } else if (userType === 'client') {
+                localStorage.setItem('user', JSON.stringify(userInfo));
+                navigate('/Hotels');
+            } else {
+                console.error("Type d'utilisateur inconnu");
+                alert("Type d'utilisateur inconnu. Veuillez contacter l'administration.");
+            }
+        } catch (error) {
+            console.error('Erreur :', error.message);
+
+            // Gestion des erreurs spécifiques
+            if (error.code === 'auth/wrong-password') {
+                alert('Mot de passe incorrect');
+            } else if (error.code === 'auth/user-not-found') {
+                alert("Utilisateur non trouvé");
+            } else {
+                alert('Erreur de connexion : ' + error.message);
+            }
         }
     };
 
-    
-
-        return (
+    return (
         <div className='w-full min-h-screen flex flex-col md:flex-row'>
             {/* Partie Gauche */}
             <div className='relative md:w-1/2 h-64 md:h-auto'>
@@ -106,5 +148,5 @@ export default function Login() {
 
             </div>
         </div>
-        )
+    )
 }

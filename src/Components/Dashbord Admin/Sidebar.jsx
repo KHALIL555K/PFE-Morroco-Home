@@ -1,7 +1,7 @@
 import React from 'react';
 import { LuLayoutDashboard } from 'react-icons/lu';
 import MenuItem from './MenuItem';
-import { menuItems } from "../constants/index";
+import { menuItems } from "../../constants/index";
 import { RiArrowLeftWideFill, RiArrowRightWideFill } from 'react-icons/ri';
 
 export default function Sidebar({ isOpen, toggleSidebar }) {

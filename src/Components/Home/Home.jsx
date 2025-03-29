@@ -1,6 +1,6 @@
 import React from "react";
 import { GoMoveToBottom } from "react-icons/go";
-import chambreTest from "../assets/chambreTest.jpg";
+import chambreTest from "../../assets/chambreTest.jpg";
 
 export default function Hero() {
     return (

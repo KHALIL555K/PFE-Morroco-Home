@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Sidebar from '../Dashbord Admin/Sidebar'
-import MainContent from '../Dashbord Admin/MainContent';
+import Sidebar from '../Components/Dashbord Admin/Sidebar'
+import MainContent from '../Components/Dashbord Admin/MainContent';
 
 export default function DashbordAdmin() {
     const [darkMode, setDarkMode] = useState(true);

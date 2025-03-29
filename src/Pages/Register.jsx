@@ -1,61 +1,92 @@
-import React, { useRef } from 'react'
-import room2 from '../assets/room2.jpg'
+import React, { useRef, useState } from 'react';
+import room2 from '../assets/room2.jpg';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { addDoc, collection, Timestamp } from 'firebase/firestore';
+import { doc , setDoc ,  Timestamp } from 'firebase/firestore';
 import { auth, fireDB } from '../firebase/firebaseConfig';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function Register() {
-    const nomRef = useRef()
-    const emailRef = useRef()
-    const passwordRef = useRef()
+    const nomRef = useRef();
+    const emailRef = useRef();
+    const passwordRef = useRef();
+    const hotelNameRef = useRef();
+    const descriptionRef = useRef();
+    const addressRef = useRef();
+    const [userType, setUserType] = useState('client');
     const navigate = useNavigate();
 
     const signUp = async (e) => {
-        e.preventDefault(); // Empêche le rechargement
+        e.preventDefault();
 
-        // Validation des champs
         if (!nomRef.current.value || !emailRef.current.value || !passwordRef.current.value) {
-            alert('Veuillez remplir tous les champs');
+            alert('Veuillez remplir tous les champs obligatoires');
+            return;
+        }
+
+        if (userType === 'admin' && (!hotelNameRef.current.value || !addressRef.current.value)) {
+            alert('Veuillez remplir tous les champs pour les administrateurs');
             return;
         }
 
         try {
-            // Création de l'utilisateur
+            // Création de l'utilisateur Firebase
             const userCredential = await createUserWithEmailAndPassword(
                 auth,
-                emailRef.current.value, // Correction ici
-                passwordRef.current.value // Correction ici
+                emailRef.current.value,
+                passwordRef.current.value
             );
 
-            // Enregistrement des infos supplémentaires
+            // Construction des données utilisateur
             const user = {
                 nom: nomRef.current.value,
+                email: emailRef.current.value,
                 uid: userCredential.user.uid,
-                email: userCredential.user.email, // Correction: pas de .current.value ici
+                type: userType,
                 time: Timestamp.now()
             };
 
-            const userRef = collection(fireDB, "users");
-            await addDoc(userRef, user);
+            // Ajout des infos supplémentaires pour les administrateurs
+            if (userType === 'admin') {
+                user.hotelName = hotelNameRef.current.value;
+                user.description = descriptionRef.current.value;
+                user.address = addressRef.current.value;
+            }
 
-            // Reset et redirection
+            // Sauvegarde dans Firestore avec UID comme ID du document
+            const userRef = doc(fireDB, "users", userCredential.user.uid);
+            await setDoc(userRef, user);
+
+            // Reset du formulaire
             nomRef.current.value = "";
             emailRef.current.value = "";
             passwordRef.current.value = "";
+            if (hotelNameRef.current) hotelNameRef.current.value = "";
+            if (descriptionRef.current) descriptionRef.current.value = "";
+            if (addressRef.current) addressRef.current.value = "";
+
             navigate('/');
 
         } catch (error) {
             console.error("Erreur d'inscription:", error);
-            alert(`Erreur: ${error.message}`); // Meilleur feedback
+
+            if (error.code === 'auth/email-already-in-use') {
+                alert("Cet email est déjà utilisé. Veuillez en choisir un autre.");
+            } else if (error.code === 'auth/weak-password') {
+                alert("Mot de passe trop faible. Utilisez au moins 6 caractères.");
+            } else {
+                alert(`Erreur: ${error.message}`);
+            }
         }
     };
 
 
+    const handleUserTypeChange = (e) => {
+        setUserType(e.target.value === 'Administrateur d\'un Hotel' ? 'admin' : 'client');
+    };
 
     return (
         <div className='w-full min-h-screen flex flex-col md:flex-row'>
-            {/* Partie Gauche */}
+            {/* Partie Gauche (identique) */}
             <div className='relative md:w-1/2 h-64 md:h-auto'>
                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center md:items-start md:justify-start">
                     <div className='md:mt-20 md:ml-10 p-6 text-center md:text-left text-center'>
@@ -80,19 +111,31 @@ export default function Register() {
                 {/* Formulaire */}
                 <form onSubmit={signUp} className='max-w-md w-full mx-auto space-y-6'>
                     <div className='space-y-2'>
-                        <h2 className='text-2xl font-bold text-gray-900'>cree un compte</h2>
+                        <h2 className='text-2xl font-bold text-gray-900'>Créer un compte</h2>
                         <p className='text-gray-600'>Bienvenue, veuillez entrer vos identifiants</p>
                     </div>
 
+                    <div className="space-y-1">
+                        <select
+                            onChange={handleUserTypeChange}
+                            className='w-full my-2 p-2 rounded-xl focus:outline-none'
+                        >
+                            <option>Client (normal user)</option>
+                            <option>Administrateur d'un Hotel</option>
+                        </select>
+                    </div>
+
                     <div className='space-y-4'>
+                        {/* Champs communs */}
                         <div className='space-y-1'>
-                            <label htmlFor="name" className='block text-sm font-medium text-gray-700'>nom</label>
+                            <label htmlFor="name" className='block text-sm font-medium text-gray-700'>Nom</label>
                             <input
                                 ref={nomRef}
                                 type="text"
                                 id="nom"
-                                placeholder='ABC'
+                                placeholder='Votre nom'
                                 className='w-full px-3 py-3 border-b-2 border-gray-300 focus:border-black focus:outline-none bg-transparent transition-colors'
+                                required
                             />
                         </div>
                         <div className='space-y-1'>
@@ -103,9 +146,9 @@ export default function Register() {
                                 id="email"
                                 placeholder='exemple@email.com'
                                 className='w-full px-3 py-3 border-b-2 border-gray-300 focus:border-black focus:outline-none bg-transparent transition-colors'
+                                required
                             />
                         </div>
-
                         <div className='space-y-1'>
                             <label htmlFor="password" className='block text-sm font-medium text-gray-700'>Mot de passe</label>
                             <input
@@ -114,8 +157,45 @@ export default function Register() {
                                 id="password"
                                 placeholder='••••••••'
                                 className='w-full px-3 py-3 border-b-2 border-gray-300 focus:border-black focus:outline-none bg-transparent transition-colors'
+                                required
                             />
                         </div>
+
+                        {/* Champs spécifiques aux administrateurs */}
+                        {userType === 'admin' && (
+                            <>
+                                <div className='space-y-1'>
+                                    <label htmlFor="hotelName" className='block text-sm font-medium text-gray-700'>Nom de l'hôtel</label>
+                                    <input
+                                        ref={hotelNameRef}
+                                        type="text"
+                                        id="hotelName"
+                                        placeholder='Nom de votre hôtel'
+                                        className='w-full px-3 py-3 border-b-2 border-gray-300 focus:border-black focus:outline-none bg-transparent transition-colors'
+                                    />
+                                </div>
+                                <div className='space-y-1'>
+                                    <label htmlFor="description" className='block text-sm font-medium text-gray-700'>Description</label>
+                                    <textarea
+                                        ref={descriptionRef}
+                                        id="description"
+                                        placeholder='Description de votre hôtel'
+                                        className='w-full px-2 py-2 border-b-2 border-gray-300 focus:border-black focus:outline-none bg-transparent transition-colors'
+                                        rows="2"
+                                    />
+                                </div>
+                                <div className='space-y-1'>
+                                    <label htmlFor="address" className='block text-sm font-medium text-gray-700'>Adresse de l'hôtel</label>
+                                    <input
+                                        ref={addressRef}
+                                        type="text"
+                                        id="address"
+                                        placeholder='Adresse complète'
+                                        className='w-full px-3 py-3 border-b-2 border-gray-300 focus:border-black focus:outline-none bg-transparent transition-colors'
+                                    />
+                                </div>
+                            </>
+                        )}
 
                         <div className='flex justify-between items-center pt-2'>
                             <label className='flex items-center space-x-2'>
@@ -130,20 +210,22 @@ export default function Register() {
 
                     {/* Boutons */}
                     <div className='space-y-4'>
-                        <button className='w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors'>
-                            Cree compte
+                        <button
+                            type="submit"
+                            className='w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors'
+                        >
+                            Créer compte
                         </button>
-
                     </div>
                 </form>
 
                 {/* Footer */}
                 <div className='text-center text-sm text-gray-600'>
-                    <p>vous avec deja un compte {' '}
-                        <Link to="/" className='font-semibold text-black hover:underline'>connecter</Link>
+                    <p>Vous avez déjà un compte {' '}
+                        <Link to="/" className='font-semibold text-black hover:underline'>Connectez-vous</Link>
                     </p>
                 </div>
             </div>
         </div>
-    )
+    );
 }

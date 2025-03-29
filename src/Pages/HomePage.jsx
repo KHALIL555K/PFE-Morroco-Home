@@ -1,11 +1,11 @@
-import Commantaire from "../Home/Commantaire"
-import Home from "../Home/Home"
-import Login from "../Home/Login"
-import Navbar from "../Home/Navbar"
-import Service from "../Home/Service"
+import Commantaire from "../Components/Home/Commantaire"
+import Home from "../Components/Home/Home"
+import Login from "../Components//Home/Login"
+import Navbar from "../Components/Home/Navbar"
+import Service from "../Components/Home/Service"
 
 
-function App() {
+function HomePage() {
 
   return (
     <>
@@ -18,4 +18,4 @@ function App() {
   )
 }
 
-export default App
+export default HomePage
