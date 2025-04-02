@@ -51,6 +51,7 @@ export default function Create() {
                 nom: NomRef.current.value,
                 prenom: PrenomRef.current.value,
                 email: EmailRef.current.value,
+                password: PasswordRef.current.value,
                 uid: userCredential.user.uid,
                 role: 'receptionniste',
                 hotelId: adminData.hotelId, // ID récupéré de l'admin
