@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import room2 from '../assets/room2.jpg';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc , setDoc ,  Timestamp } from 'firebase/firestore';
+import { addDoc, collection, doc, setDoc, Timestamp, updateDoc } from 'firebase/firestore';
 import { auth, fireDB } from '../firebase/firebaseConfig';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -18,43 +18,56 @@ export default function Register() {
     const signUp = async (e) => {
         e.preventDefault();
 
+        // Validation des champs obligatoires
         if (!nomRef.current.value || !emailRef.current.value || !passwordRef.current.value) {
             alert('Veuillez remplir tous les champs obligatoires');
             return;
         }
 
+        // Validation spécifique aux admins
         if (userType === 'admin' && (!hotelNameRef.current.value || !addressRef.current.value)) {
             alert('Veuillez remplir tous les champs pour les administrateurs');
             return;
         }
 
         try {
-            // Création de l'utilisateur Firebase
+            // 1. Création de l'utilisateur Firebase Auth
             const userCredential = await createUserWithEmailAndPassword(
                 auth,
                 emailRef.current.value,
                 passwordRef.current.value
             );
 
-            // Construction des données utilisateur
-            const user = {
+            // 2. Création du document utilisateur de base
+            const userData = {
                 nom: nomRef.current.value,
                 email: emailRef.current.value,
                 uid: userCredential.user.uid,
-                type: userType,
-                time: Timestamp.now()
+                role: userType, // 'client' ou 'admin'
+                createdAt: Timestamp.now()
             };
 
-            // Ajout des infos supplémentaires pour les administrateurs
-            if (userType === 'admin') {
-                user.hotelName = hotelNameRef.current.value;
-                user.description = descriptionRef.current.value;
-                user.address = addressRef.current.value;
-            }
-
-            // Sauvegarde dans Firestore avec UID comme ID du document
             const userRef = doc(fireDB, "users", userCredential.user.uid);
-            await setDoc(userRef, user);
+            await setDoc(userRef, userData);
+
+            // 3. Traitement spécifique pour les admins (création de l'hôtel)
+            if (userType === 'admin') {
+                const hotelData = {
+                    nom: hotelNameRef.current.value,
+                    address: addressRef.current.value,
+                    description: descriptionRef.current.value || "",
+                    adminId: userCredential.user.uid, // L'admin est propriétaire
+                    createdAt: Timestamp.now()
+                };
+
+                // Création du document hôtel
+                const hotelRef = await addDoc(collection(fireDB, "hotels"), hotelData);
+
+                // Mise à jour de l'utilisateur avec la référence à l'hôtel
+                await updateDoc(userRef, {
+                    hotelId: hotelRef.id
+                });
+            }
 
             // Reset du formulaire
             nomRef.current.value = "";
@@ -78,7 +91,6 @@ export default function Register() {
             }
         }
     };
-
 
     const handleUserTypeChange = (e) => {
         setUserType(e.target.value === 'Administrateur d\'un Hotel' ? 'admin' : 'client');

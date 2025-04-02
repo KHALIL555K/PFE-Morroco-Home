@@ -7,12 +7,12 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyABIcDOPfCT16GdsnXvjm2EVfcJUQZSrW4",
-    authDomain: "home-service-99c6e.firebaseapp.com",
-    projectId: "home-service-99c6e",
-    storageBucket: "home-service-99c6e.firebasestorage.app",
-    messagingSenderId: "885118755482",
-    appId: "1:885118755482:web:91a28ba7745cf09d683523"
+    apiKey: "AIzaSyCz4cazs6PZLoAykcRxMZhlBzp4H_9OQ9g",
+    authDomain: "morroco-home.firebaseapp.com",
+    projectId: "morroco-home",
+    storageBucket: "morroco-home.firebasestorage.app",
+    messagingSenderId: "446643951535",
+    appId: "1:446643951535:web:32dc81a0fe6dbaa0b0415a"
 };
 
 // Initialize Firebase

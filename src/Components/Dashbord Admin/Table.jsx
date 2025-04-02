@@ -1,11 +1,20 @@
 import React from 'react'
 import Title from './Title'
 import { tableData } from '../../constants/index'
+import { MdAutoDelete } from 'react-icons/md'
+import { FaRegPenToSquare } from 'react-icons/fa6'
+import { Link} from 'react-router-dom'
 
 export default function Table() {
+
+
     return (
         <div className='flex-1 rounded-xl bg-white p-5 dark:bg-slate-600 dark:text-slate-300 '>
-            <Title >Recript</Title>
+            <Link to={'/Dashbord/Admin/Create'} className='bg-brandPrimary text-white p-3 block max-w-fit rounded-xl mb-5 dark:bg-slate-300 dark:text-slate-600'>
+                ajouter un nouveau Receptionniste
+            </Link>
+
+            <Title>les Receptionnistes de votre Hotel </Title>
 
             <table className='min-w-full '>
                 <thead>
@@ -25,6 +34,14 @@ export default function Table() {
                                 <td className='px-4 py-3 font-medium'>{item.receiptName}</td>
                                 <td className='px-4 py-3 font-medium'>{item.date}</td>
                                 <td className='px-4 py-3 font-medium'>{item.amount}</td>
+                                <td>
+                                    <button className='text-white bg-blue-800 p-2 rounded-lg mr-1'>
+                                        <FaRegPenToSquare className='text-xl' />
+                                    </button>
+                                    <button className='text-white bg-red-800 p-2 rounded-lg  ml-1'>
+                                        <MdAutoDelete className='text-xl' />
+                                    </button>
+                                </td>
                             </tr>
                         )
                     })}

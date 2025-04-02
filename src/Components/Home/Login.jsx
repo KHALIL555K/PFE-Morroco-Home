@@ -3,18 +3,16 @@ import room2 from '../../assets/room2.jpg'
 import { Link, useNavigate } from 'react-router-dom'
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { auth, fireDB } from "../../firebase/firebaseConfig";
+import { auth, fireDB } from "../../firebase/firebaseConfig.js";
 
 export default function Login() {
 
     const emailRef = useRef()
     const passwordRef = useRef()
-    // const navigate = useNavigate()
     const navigate = useNavigate();
 
     const logIn = async (e) => {
         e.preventDefault();
-        // const navigate = useNavigate();
 
         try {
             // 1. Authentification avec Firebase Auth
@@ -41,7 +39,7 @@ export default function Login() {
             }
 
             const userData = userDoc.data();
-            const userType = userData.type; // 'admin' ou 'client'
+            const userType = userData.role ; // 'admin' ou 'client' ou 'receptionniste'
 
             // 4. Stockage et redirection en fonction du type d'utilisateur
             const userInfo = { ...user, ...userData };
@@ -51,7 +49,11 @@ export default function Login() {
             } else if (userType === 'client') {
                 localStorage.setItem('user', JSON.stringify(userInfo));
                 navigate('/Hotels');
-            } else {
+            } else if (userType === 'receptionniste') {
+                localStorage.setItem('receptionniste', JSON.stringify(userInfo))
+                navigate('/Dashbord/Receptionniste');
+            }
+            else {
                 console.error("Type d'utilisateur inconnu");
                 alert("Type d'utilisateur inconnu. Veuillez contacter l'administration.");
             }
