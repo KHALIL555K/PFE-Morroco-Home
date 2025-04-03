@@ -17,6 +17,7 @@ import {
 import user01 from "../assets/user01.png";
 import user02 from "../assets/user02.png";
 import user03 from "../assets/user03.png";
+import { HiOutlineAnnotation, HiOutlineCog, HiOutlineCube, HiOutlineQuestionMarkCircle, HiOutlineShoppingCart, HiOutlineUsers, HiOutlineViewGrid, HiOutlineViewGridAdd } from "react-icons/hi";
 // import user04 from "../assets/user04.png";
 
 // Menu Items
@@ -129,12 +130,7 @@ export const recentActivities = [
     img: user03,
     activity: "Updated Profile",
   },
-  // {
-  //   id: 4,
-  //   name: "Bob Brown",
-  //   img: user04,
-  //   activity: "Logged Out",
-  // },
+
 ];
 
 // Chart Data
@@ -213,3 +209,54 @@ export const chartData02 = [
     value: 80,
   },
 ];
+
+
+
+
+export const DASHBOARD_SIDEBAR_LINKS = [
+  {
+    key: 'dashboard',
+    label: 'Dashboard',
+    path: '/Dashbord/Receptionniste',
+    // icon: <HiOutlineViewGrid />
+  },
+  {
+    key: 'products',
+    label: 'Products',
+    path: '/Dashbord/Receptionniste/Products',
+    // icon: <HiOutlineCube />
+  },
+  {
+    key: 'orders',
+    label: 'Orders',
+    path: '/Dashbord/Receptionniste/Orders',
+    // icon: <HiOutlineShoppingCart />
+  },
+  {
+    key: 'customers',
+    label: 'Customers',
+    path: '/Dashbord/Receptionniste/Customers',
+    // icon: <HiOutlineUsers />
+  },
+  {
+    key: 'transactions',
+    label: 'Transactions',
+    path: '/Dashbord/Receptionniste/Transactions',
+    // icon: <HiOutlineAnnotation />
+  },
+]
+
+export const DASHBOARD_SIDEBAR_BOTTOM_LINKS = [
+  {
+    key: 'settings',
+    label: 'Settings',
+    path: '/Dashbord/Receptionniste/Settings',
+    // icon: <HiOutlineCog />
+  },
+  {
+    key: 'support',
+    label: 'Help & Support',
+    path: '/Dashbord/Receptionniste/Support',
+    // icon: <HiOutlineQuestionMarkCircle />
+  }
+]

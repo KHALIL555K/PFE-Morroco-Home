@@ -15,17 +15,3 @@ export default function MainContent({ isOpen, darkMode, toggleDarkMode }) {
         </div>
     )
 }
-
-
-
-
-//cards et tableaux et CustomBarChart
-{/* <Cards />
-<div className='translate-all flex flex-col gap-4 p-4 duration-300
-    sm:px-7 sm:py-1 xl:flex-row '>
-    <CustomBarChart />
-</div>
-<div className='translate-all flex flex-col gap-4 p-4 duration-300
-    sm:px-7 sm:py-1 xl:flex-row '>
-    <Table />
-</div> */}
