@@ -21,4 +21,4 @@ const fireDB = getFirestore(app);
 const auth = getAuth(app);
 
 
-export { auth, fireDB };
+export { auth, fireDB  };

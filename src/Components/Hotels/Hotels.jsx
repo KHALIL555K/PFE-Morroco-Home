@@ -1,96 +1,118 @@
-import React from 'react'
-import chambreTest from '../../assets/chambreTest.jpg'
-import { IoIosAdd } from 'react-icons/io'
+import React, { useEffect, useState } from 'react';
+import { fireDB } from '../../firebase/firebaseConfig';
+import { collection, getDocs } from 'firebase/firestore';
 
-export default function Hotels() {
+export default function ChambresAvecOffres() {
+    const [chambresAvecOffres, setChambresAvecOffres] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const cards = [
-        {
-            img: chambreTest,
-            nomHotel: 'nador hotel',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, ipsa.',
-            prix: 20,
-            iconPlus: <IoIosAdd />
-        },
-        {
-            img: chambreTest,
-            nomHotel: 'nador hotel',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, ipsa.',
-            prix: 20,
-            iconPlus: <IoIosAdd />
-        },
-        {
-            img: chambreTest,
-            nomHotel: 'nador hotel',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, ipsa.',
-            prix: 20,
-            iconPlus: <IoIosAdd />
-        },
-        {
-            img: chambreTest,
-            nomHotel: 'nador hotel',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, ipsa.',
-            prix: 20,
-            iconPlus: <IoIosAdd />
-        },
-        {
-            img: chambreTest,
-            nomHotel: 'nador hotel',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, ipsa.',
-            prix: 20,
-            iconPlus: <IoIosAdd />
-        },
-        {
-            img: chambreTest,
-            nomHotel: 'nador hotel',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, ipsa.',
-            prix: 20,
-            iconPlus: <IoIosAdd />
-        },
-        {
-            img: chambreTest,
-            nomHotel: 'nador hotel',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, ipsa.',
-            prix: 20,
-            iconPlus: <IoIosAdd />
-        },
-        {
-            img: chambreTest,
-            nomHotel: 'nador hotel',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, ipsa.',
-            prix: 20,
-            iconPlus: <IoIosAdd />
-        },
-        {
-            img: chambreTest,
-            nomHotel: 'nador hotel',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, ipsa.',
-            prix: 20,
-            iconPlus: <IoIosAdd />
-        },
+    useEffect(() => {
+        const fetchChambresAvecOffres = async () => {
+            try {
+                setLoading(true);
+                setError(null);
 
-    ]
+                const chambresSnapshot = await getDocs(collection(fireDB, "chambres"));
+                const chambresData = chambresSnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+
+                if (chambresData.length === 0) {
+                    setError("Aucune chambre avec une offre disponible.");
+                    setLoading(false);
+                    return;
+                }
+
+                const hotelsSnapshot = await getDocs(collection(fireDB, "hotels"));
+                const hotelsData = {};
+                hotelsSnapshot.docs.forEach(hotelDoc => {
+                    hotelsData[hotelDoc.id] = {
+                        id: hotelDoc.id,
+                        ...hotelDoc.data()
+                    };
+                });
+
+                const chambresAvecHotels = chambresData.map(chambre => ({
+                    ...chambre,
+                    hotel: hotelsData[chambre.hotelId] || { nom: "Hôtel inconnu", adresse: "Adresse non disponible" }
+                }));
+
+                setChambresAvecOffres(chambresAvecHotels);
+            } catch (err) {
+                setError("Erreur lors du chargement des données.");
+                console.error("Erreur Firebase:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchChambresAvecOffres();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p className="text-xl font-semibold">Chargement des chambres en promotion...</p>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p className="text-xl text-red-600 font-semibold">{error}</p>
+            </div>
+        );
+    }
 
     return (
-        <section className='w-full max-w-8xl mx-auto justify-center mt-[8em] flex flex-wrap gap-6'>
-            {cards.map((value, key) => (
-                <div
-                    key={key}
-                    className='w-full sm:w-[48%] md:w-[30%] lg:w-[23%] flex flex-col shadow-md rounded-lg p-2 text-center'
-                >
-                    <div>
-                        <img src={value.img} className='rounded-lg w-full' alt={value.nomHotel} />
+        <div className="w-full mx-auto mt-[65px] px-4">
+            <h2 className="text-3xl font-bold text-center mb-10 text-blue-700 uppercase">Nos Meilleures Offres</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                {chambresAvecOffres.map(chambre => (
+                    <div
+                        key={chambre.id}
+                        className="bg-white shadow-md hover:shadow-xl transition-shadow duration-300 rounded-xl overflow-hidden w-full flex flex-col"
+                    >
+                        {/* Image */}
+                        <div className="h-64 bg-gray-200 relative">
+                            <img
+                                src={chambre.imageBase64 || "https://via.placeholder.com/400x300?text=Chambre"}
+                                alt={chambre.type || "Chambre"}
+                                className="w-full h-full object-cover "
+                                onError={(e) => (e.target.src = "https://via.placeholder.com/400x300?text=Image+Indisponible")}
+                            />
+                            <span className="absolute top-2 right-2 bg-red-500 text-white text-xs px-3 py-1 rounded-full shadow-md">
+                                Offre spéciale
+                            </span>
+                        </div>
+
+                        {/* Infos chambre et hôtel */}
+                        <div className="p-5 flex-1 flex flex-col justify-between min-h-[280px]">
+                            <div>
+                                <h3 className="text-xl font-semibold text-gray-800">{chambre.type || "Chambre standard"}</h3>
+                                <p className="text-gray-600 mt-1">
+                                    Prix : <span className="font-bold text-green-600">{chambre.prix} MAD</span>
+                                </p>
+                                {chambre.description && (
+                                    <p className="text-gray-500 text-sm mt-2">{chambre.description}</p>
+                                )}
+                                <p className="text-sm text-gray-500 mt-2">
+                                    <span className="font-semibold">Étage :</span> {chambre.etage || "Non spécifié"}
+                                </p>
+                            </div>
+
+                            <div className="mt-4 p-3 bg-gray-100 rounded-md shadow-sm">
+                                <h4 className="font-semibold text-blue-600">{chambre.hotel.nom}</h4>
+                                <p className="text-sm text-gray-500">{chambre.hotel.adresse}</p>
+                            </div>
+                            
+                        </div>
                     </div>
-                    <h3 className='md:text-xl lg:text-2xl my-4 sm:text-lg  '>Hotel : {value.nomHotel}</h3>
-                    <p className='lg:text-lg md:text-md sm:text-sm'>{value.description}</p>
-                    <div className='flex justify-between items-center w-full mt-4'>
-                        <p>{value.prix} MAD</p>
-                        <button className='bg-brandPrimary text-white p-2 rounded-full'>
-                            {value.iconPlus}
-                        </button>
-                    </div>
-                </div>
-            ))}
-        </section>
+                ))}
+            </div>
+        </div>
     );
 }

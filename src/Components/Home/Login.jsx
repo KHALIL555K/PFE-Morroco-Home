@@ -71,6 +71,7 @@ export default function Login() {
         }
     };
 
+
     return (
         <div className='w-full min-h-screen flex flex-col md:flex-row'>
             {/* Partie Gauche */}
@@ -84,7 +85,7 @@ export default function Login() {
                 <img
                     src={room2}
                     alt="Chambre d'hôtel"
-                    className='w-full h-full object-cover'
+                    className='w-full h-full center'
                 />
             </div>
 
@@ -96,7 +97,7 @@ export default function Login() {
                 </div>
 
                 {/* Formulaire */}
-                <form className='max-w-md w-full mx-auto space-y-6'>
+                <form className='max-w-lg w-full mx-auto space-y-6 border p-6 rounded-lg shadow-xl'>
                     <div className='space-y-2'>
                         <h2 className='text-2xl font-bold text-gray-900'>Connexion</h2>
                         <p className='text-gray-600'>Bienvenue, veuillez entrer vos identifiants</p>

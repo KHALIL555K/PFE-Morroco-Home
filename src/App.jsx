@@ -11,8 +11,7 @@ import Layout from './Components/Dashbord Receptionniste/Layout.jsx';
 import Dashboard from './Components/Dashbord Receptionniste/Dashboard.jsx';
 import Chambres from './Components/Dashbord Receptionniste/Chambres.jsx';
 import Reservation from './Components/Dashbord Receptionniste/Reservation.jsx';
-
-
+import CreateChambre from './Components/Dashbord Receptionniste/CreateChambre.jsx';
 
 
 export default function App() {
@@ -40,6 +39,7 @@ export default function App() {
                     <Route index element={<Dashboard />} />
                     <Route path='Chambres' element={<Chambres />} />
                     <Route path='Reservation' element={<Reservation />} />
+                    <Route path='Chambres/Create' element={<CreateChambre />} />
                 </Route>
 
                 {/* page de registrement */}

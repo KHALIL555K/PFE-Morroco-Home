@@ -109,7 +109,7 @@ export default function Register() {
                 <img
                     src={room2}
                     alt="Chambre d'hôtel"
-                    className='w-full h-full object-cover'
+                    className='w-full h-full center'
                 />
             </div>
 
@@ -121,7 +121,7 @@ export default function Register() {
                 </div>
 
                 {/* Formulaire */}
-                <form onSubmit={signUp} className='max-w-md w-full mx-auto space-y-6'>
+                <form onSubmit={signUp} className='max-w-lg w-full mx-auto space-y-6 border rounded-lg p-6 shadow-xl'>
                     <div className='space-y-2'>
                         <h2 className='text-2xl font-bold text-gray-900'>Créer un compte</h2>
                         <p className='text-gray-600'>Bienvenue, veuillez entrer vos identifiants</p>

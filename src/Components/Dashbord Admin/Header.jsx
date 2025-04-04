@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 export default function Header({ toggleDarkMode, darkMode }) {
 
 
-    const nom = JSON.parse(localStorage.getItem('admin'));
+    const userData = JSON.parse(localStorage.getItem('admin'));
 
     // console.log(nom.nom)
 
@@ -28,7 +28,7 @@ export default function Header({ toggleDarkMode, darkMode }) {
                 <div className='flex items-center gap-3 '>
                     <CiLogout onClick={logout} className='rounded-md bg-slate-200 p-2 text-4xl dark:bg-slate-600 dark:text-slate-300 font-bold ' />
                     <FaUser className='rounded-md bg-slate-200 p-2 text-4xl dark:bg-slate-600 dark:text-slate-300 ' />
-                    <h2 className='font-medium'>{nom.nom}</h2>
+                    <h2 className='font-medium'>{userData?.nom}</h2>
                 </div>
             </div>
         </div>
