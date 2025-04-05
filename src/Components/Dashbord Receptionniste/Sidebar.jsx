@@ -19,17 +19,17 @@ export default function Sidebar() {
                 <span className='text-neutral-100 text-lg'>Dashboard</span>
             </div>
             <div className='flex-1 flex flex-col gap-1 py-4'>
-                <Link className='hover:bg-neutral-600 p-2 rounded-lg flex items-center gap-2' to={'/Dashbord/Receptionniste'} >
+                <Link className='hover:bg-neutral-600 p-2 rounded-lg flex items-center gap-2' to={'/Dashboard/Receptionniste'} >
                     <HiOutlineViewGrid />
                     Dashbord
                 </Link>
 
-                <Link className='hover:bg-neutral-600 p-2 rounded-lg  flex items-center gap-2' to={'/Dashbord/Receptionniste/Chambres'}>
+                <Link className='hover:bg-neutral-600 p-2 rounded-lg  flex items-center gap-2' to={'/Dashboard/Receptionniste/Chambres'}>
                     <HiOutlineCube />
                     Chambres
                 </Link>
 
-                <Link className='hover:bg-neutral-600 p-2 rounded-lg  flex items-center gap-2' to={'/Dashbord/Receptionniste/Reservation'}>
+                <Link className='hover:bg-neutral-600 p-2 rounded-lg  flex items-center gap-2' to={'/Dashboard/Receptionniste/Reservation'}>
                     <HiOutlineShoppingCart />
                     Reservation
                 </Link>
@@ -39,17 +39,17 @@ export default function Sidebar() {
 
             <div className='mt-auto flex flex-col gap-0.5 pt-2 border-t border-neutral-700'>
 
-                <Link className='hover:bg-neutral-600 p-2 rounded-lg  flex items-center gap-2' to={'/Dashbord/Receptionniste/Transactions'}>
+                <Link className='hover:bg-neutral-600 p-2 rounded-lg  flex items-center gap-2' to={'/Dashboard/Receptionniste/Transactions'}>
                     <HiOutlineCog />
                     Settigns
                 </Link>
 
-                <Link className='hover:bg-neutral-600 p-2 rounded-lg  flex items-center gap-2' to={'/Dashbord/Receptionniste/Transactions'}>
+                <Link className='hover:bg-neutral-600 p-2 rounded-lg  flex items-center gap-2' to={'/Dashboard/Receptionniste/Transactions'}>
                     <HiOutlineQuestionMarkCircle />
                     Supports
                 </Link>
 
-                <button onClick={LogOut} className='hover:bg-neutral-600 p-2 rounded-lg text-red-500 flex items-center gap-2' to={'/Dashbord/Receptionniste/Transactions'}>
+                <button onClick={LogOut} className='hover:bg-neutral-600 p-2 rounded-lg text-red-500 flex items-center gap-2' to={'/'}>
                     <CiLogout />
                     Log out
                 </button>

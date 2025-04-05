@@ -68,7 +68,7 @@ export default function Create() {
             });
 
             // 5. Redirection
-            navigate('/Dashbord/Admin');
+            navigate('/Dashboard/Admin');
             alert('Réceptionniste créé avec succès!');
 
         } catch (error) {
@@ -110,7 +110,7 @@ export default function Create() {
                                 <input
                                     id="nom"
                                     type="text"
-                                    placeholder='Khalil'
+                                    placeholder='zeggani'
                                     ref={NomRef}
                                     className='w-full px-4 py-2 border-b border-gray-300 focus:outline-none focus:border-b-black  focus:border-transparent transition'
                                 />
@@ -128,7 +128,7 @@ export default function Create() {
                             <input
                                 id="prenom"
                                 type="text"
-                                placeholder='Zeggani'
+                                placeholder='khalil'
                                 ref={PrenomRef}
                                 className='w-full px-4 py-2 border-b border-gray-300 focus:outline-none focus:border-b-black  focus:border-transparent transition'
                             />

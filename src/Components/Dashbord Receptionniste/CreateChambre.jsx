@@ -85,7 +85,7 @@ export default function CreateChambre() {
             console.error("Erreur lors de l'ajout de la chambre:", err);
         }
 
-        navigate('/Dashbord/Receptionniste/Chambres')
+        navigate('/Dashboard/Receptionniste/Chambres')
 
     };
 
@@ -209,6 +209,7 @@ export default function CreateChambre() {
                             type="submit"
                             className="w-1/3 py-2 px-4 text-white bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 transition duration-200 disabled:opacity-50"
                         >
+                            Enregister
                         </button>
                     </div>
                 </form>

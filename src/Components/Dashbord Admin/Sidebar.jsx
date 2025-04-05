@@ -20,28 +20,22 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
 
 
             <div className="mt-6 flex-1">
-                <Link to={'/Dashbord/Admin'}>
+                <Link to={'/Dashboard/Admin'}>
                     <div className='m-2 flex m-2 flex cursor-pointer items-center space-x-4 rounded px-4 py-3 text-gray-400  hover:bg-brandPrimary hover:text-white'>
                         <FaHome className="text-xl" />
                         {isOpen && <span className='text-[14px] overflow-hidden'>home</span>}
                     </div>
                 </Link>
 
-                <Link to={'Recpetionniste'}>
+                <Link to={'Receptionniste'}>
                     <div className='m-2 flex m-2 flex cursor-pointer items-center space-x-4 rounded px-4 py-3 text-gray-400  hover:bg-brandPrimary hover:text-white'>
                         <FaUser className="text-xl" />
                         {isOpen && <span className='text-[14px] overflow-hidden'>Les Receptionniste</span>}
                     </div>
                 </Link>
 
-                <Link to={'Profile'}>
-                    <div className='m-2 flex m-2 flex cursor-pointer items-center space-x-4 rounded px-4 py-3 text-gray-400  hover:bg-brandPrimary hover:text-white'>
-                        <FaCog className="text-xl" />
-                        {isOpen && <span className='text-[14px] overflow-hidden'>Votre Profile</span>}
-                    </div>
-                </Link>
 
-                <Link to={'Statistique/Details'}>
+                <Link to={''}>
                     <div className='m-2 flex m-2 flex cursor-pointer items-center space-x-4 rounded px-4 py-3 text-gray-400  hover:bg-brandPrimary hover:text-white'>
                         <FaChartLine className="text-xl" />
                         {isOpen && <span className='text-[14px] overflow-hidden'>Statistique Details</span>}

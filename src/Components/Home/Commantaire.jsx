@@ -5,30 +5,42 @@ import user4 from '../../assets/user4.jpg'
 import user5 from '../../assets/user5.jpg'
 
 
-
 export default function Commantaire() {
 
     const commantaires = [
         {
             img: user1,
-            name: 'khalil',
-            description: ' Lorem ipsum dolor sit amet, Lorem, ipsum dolor. consectetur adipisicing elit. Voluptatum, aliquam.',
+            name: 'Khalil',
+            role: 'Voyageur fréquent',
+            rating: 5,
+            description: 'Une expérience exceptionnelle ! La réservation en ligne est ultra-rapide et le personnel à l\'arrivée était très accueillant. Je recommande vivement cette plateforme pour vos séjours au Maroc.',
+            date: '15 mars 2024'
         },
         {
             img: user5,
-            name: 'ayoub',
-            description: ' Lorem ipsum dolor sit amet, Lorem, ipsum dolor. consectetur adipisicing elit. Voluptatum, aliquam.',
+            name: 'Ayoub',
+            role: 'Touriste espagnol',
+            rating: 4,
+            description: 'Très bon service avec des options de paiement flexibles. J\'ai particulièrement apprécié la possibilité de payer sur place. La chambre était exactement comme sur les photos.',
+            date: '2 février 2024'
         },
         {
             img: user3,
-            name: 'youssef',
-            description: ' Lorem ipsum dolor sit amet, Lorem, ipsum dolor. consectetur adipisicing elit. Voluptatum, aliquam.',
+            name: 'Youssef',
+            role: 'Homme d\'affaires',
+            rating: 5,
+            description: 'Parfait pour les professionnels. La connexion wifi était excellente et le service 24h/24 m\'a permis de travailler confortablement. Je reviendrai certainement.',
+            date: '28 janvier 2024'
         },
         {
             img: user4,
-            name: 'ahmed',
-            description: ' Lorem ipsum dolor sit amet, Lorem, ipsum dolor. consectetur adipisicing elit. Voluptatum, aliquam.',
+            name: 'Ahmed',
+            role: 'Famille avec enfants',
+            rating: 4,
+            description: 'Nous avons passé un excellent séjour en famille. Le système de réservation est simple à utiliser et l\'hôtel proposait des activités pour les enfants. Merci !',
+            date: '10 décembre 2023'
         },
+       
     ]
 
     return (

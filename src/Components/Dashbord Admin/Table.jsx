@@ -106,7 +106,7 @@ export default function Table() {
     return (
         <div className='flex-1 rounded-xl bg-white p-5 dark:bg-slate-600 dark:text-slate-300'>
             <Link 
-                to={'/Dashbord/Admin/Create'} 
+                to={'/Dashboard/Admin/Create'} 
                 className='bg-brandPrimary text-white p-3 block max-w-fit rounded-xl mb-5 dark:bg-slate-300 dark:text-slate-600'
             >
                 Ajouter un nouveau réceptionniste

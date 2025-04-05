@@ -19,9 +19,8 @@ export default function Header() {
                             className='text-sm focus:outline-none active:outline-none focus:border-gray-500 h-10 w-[24rem] border border-gray-300 rounded-lg pl-11 pr-4 px-4 ' />
                     </div>
                     <div>
-                        <button onClick={() => navigate('/Dashbord/Receptionniste/Chambres/Create')} className='bg-green-500 text-white font-bold p-2 rounded-xl hover:bg-neutral-500 duration-300 flex items-center gap-2 '>
-                            <BsHouseAddFill className='text-white text-4xl ' />
-                            ajouter un chambre
+                        <button onClick={() => navigate('/Dashboard/Receptionniste/Chambres/Create')} className='bg-green-500 text-white font-bold p-2 rounded-xl hover:bg-neutral-500 duration-300 flex items-center gap-2 '>
+                            <BsHouseAddFill className='text-white text-4xl rounded-xl' />
                         </button>
                     </div>
                 </div>

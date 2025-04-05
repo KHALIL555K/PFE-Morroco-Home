@@ -7,8 +7,9 @@ import { auth, fireDB } from "../../firebase/firebaseConfig.js";
 
 export default function Login() {
 
-    const emailRef = useRef()
-    const passwordRef = useRef()
+    const emailRef = useRef();
+    const passwordRef = useRef();
+
     const navigate = useNavigate();
 
     const logIn = async (e) => {
@@ -21,6 +22,7 @@ export default function Login() {
                 emailRef.current.value,
                 passwordRef.current.value
             );
+            
             const user = userCredential.user;
 
             // 2. Vérification de l'utilisateur authentifié
@@ -45,13 +47,13 @@ export default function Login() {
             const userInfo = { ...user, ...userData };
             if (userType === 'admin') {
                 localStorage.setItem('admin', JSON.stringify(userInfo));
-                navigate('/Dashbord/Admin');
+                navigate('/Dashboard/Admin');
             } else if (userType === 'client') {
                 localStorage.setItem('user', JSON.stringify(userInfo));
                 navigate('/Hotels');
             } else if (userType === 'receptionniste') {
                 localStorage.setItem('receptionniste', JSON.stringify(userInfo))
-                navigate('/Dashbord/Receptionniste');
+                navigate('/Dashboard/Receptionniste');
             }
             else {
                 console.error("Type d'utilisateur inconnu");
@@ -91,10 +93,7 @@ export default function Login() {
 
             {/* Partie Droite */}
             <div className='w-full md:w-1/2 bg-gray-50 p-8 md:p-20 flex flex-col justify-between'>
-                {/* En-tête */}
-                <div className='text-right'>
-                    <h1 className='text-lg font-bold text-gray-900'>Interactive Brand</h1>
-                </div>
+               
 
                 {/* Formulaire */}
                 <form className='max-w-lg w-full mx-auto space-y-6 border p-6 rounded-lg shadow-xl'>

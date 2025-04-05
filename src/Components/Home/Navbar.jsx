@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FaBars, FaXmark } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
+import HomeServiceLogo from "../../assets/HomeServiceLogo.png"
 
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -37,7 +38,26 @@ export default function Navbar() {
         <header className='w-full md:bg-transparent fixed top-0 left-0 right-0 z-50'>
             <nav className={`py-2 lg:px-13 px-4 ${isSticky ? "sticky top-8 left-0 right-0 border-b bg-white duration-300" : ""} bg-white`}>
                 <div className='flex justify-between items-center text-base gap-8'>
-                    <a href="#" className='font-bold'>MORROCO <span className='text-brandPrimary '>{" "} HOME</span></a>
+                    <div className="flex gap-2 items-center">
+                        {/* Logo - Ajout d'un lazy loading et dimensions explicites */}
+                        <img
+                            src={HomeServiceLogo}
+                            alt="Morroco Home Service Logo"
+                            className="w-20 h-20 object-contain"
+                            width={80}
+                            height={80}
+                            loading="lazy"
+                        />
+
+                        {/* Texte - Meilleure sémantique et accessibilité */}
+                        <a
+                            href="/"
+                            className="font-bold text-2xl hover:text-brandPrimary transition-colors  uppercase duration-200"
+                            aria-label="Morroco Home - Retour à l'accueil"
+                        >
+                            Home <span className="text-brandPrimary">Service</span>
+                        </a>
+                    </div>
                     {/* nav items */}
                     <ul className="md:flex space-x-12 hidden">
                         {

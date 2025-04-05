@@ -20,7 +20,7 @@ export default function Chambres() {
                         collection(fireDB, "users"),
                         where("email", "==", user.email)
                     ));
-                    
+
                     if (!userDoc.empty) {
                         const userData = userDoc.docs[0].data();
                         setCurrentUserHotel(userData.hotelId);
@@ -30,7 +30,7 @@ export default function Chambres() {
                 }
             }
         });
-        
+
         return () => unsubscribe();
     }, []);
 
@@ -44,7 +44,7 @@ export default function Chambres() {
                 collection(fireDB, "chambres"),
                 where("hotelId", "==", currentUserHotel)
             );
-            
+
             const querySnapshot = await getDocs(q);
             const chambresArray = querySnapshot.docs.map(doc => ({
                 id: doc.id,
@@ -95,6 +95,7 @@ export default function Chambres() {
                             {/* Image */}
                             <div className="w-full md:w-1/4 h-48">
                                 <img
+                                    loading="lazy"
                                     src={chambre.imageBase64 || 'https://via.placeholder.com/300'}
                                     alt={`Chambre ${chambre.numero}`}
                                     className="w-full h-full rounded-lg object-cover shadow-sm"
@@ -135,8 +136,8 @@ export default function Chambres() {
                                     <MdChangeCircle className="text-blue-500 text-4xl hover:text-blue-600 transition-colors" />
                                     <span className="text-xs text-gray-500 group-hover:text-blue-600">Modifier</span>
                                 </button>
-                                <button 
-                                    onClick={() => handleDelete(chambre.id)} 
+                                <button
+                                    onClick={() => handleDelete(chambre.id)}
                                     className="flex flex-col items-center group"
                                 >
                                     <TiDelete className="text-red-500 text-4xl hover:text-red-600 transition-colors" />

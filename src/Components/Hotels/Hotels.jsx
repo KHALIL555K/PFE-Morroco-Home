@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { fireDB } from '../../firebase/firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 
 export default function ChambresAvecOffres() {
     const [chambresAvecOffres, setChambresAvecOffres] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const navigate = useNavigate(); // Hook pour la navigation
+
+    // ... (le reste de votre code existant)
+
+    const handleCardClick = (chambreId) => {
+        navigate(`/chambres/${chambreId}`); // Navigation vers la page de détails
+    };
 
     useEffect(() => {
         const fetchChambresAvecOffres = async () => {
@@ -108,7 +117,18 @@ export default function ChambresAvecOffres() {
                                 <h4 className="font-semibold text-blue-600">{chambre.hotel.nom}</h4>
                                 <p className="text-sm text-gray-500">{chambre.hotel.adresse}</p>
                             </div>
-                            
+
+                            <div className="mt-4 p-3 text-center">
+                                <button
+                                    className="bg-brandPrimary text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleCardClick(chambre.id);
+                                    }}
+                                >
+                                    Voir détails
+                                </button>
+                            </div>
                         </div>
                     </div>
                 ))}
